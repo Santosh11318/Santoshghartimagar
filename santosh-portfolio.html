@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santosh Gharti Magar — Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15141c;
+    --bg-alt:#1c1a26;
+    --bg-card:#211f2c;
+    --line: rgba(245,243,247,0.10);
+    --text:#f5f3f7;
+    --text-dim:#a9a6b8;
+    --text-faint:#736f85;
+    --brand:#ff3b5c;
+    --brand-soft: rgba(255,59,92,0.14);
+
+    --c-doctor:#21d4b4;
+    --c-doctor-soft: rgba(33,212,180,0.14);
+    --c-restaurant:#ff9330;
+    --c-restaurant-soft: rgba(255,147,48,0.14);
+    --c-hospital:#ff3b5c;
+    --c-hospital-soft: rgba(255,59,92,0.14);
+    --c-school:#4c6ef5;
+    --c-school-soft: rgba(76,110,245,0.14);
+    --c-teacher:#ffc93c;
+    --c-teacher-soft: rgba(255,201,60,0.14);
+
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block; max-width:100%;}
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  ::selection{ background:var(--brand); color:#fff; }
+
+  :focus-visible{
+    outline:2px solid var(--brand);
+    outline-offset:3px;
+  }
+
+  /* ---------- background texture ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:1;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    background:rgba(21,20,28,0.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+  }
+  .brandmark{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:17px;
+    letter-spacing:0.01em;
+  }
+  .brandmark .dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--brand);
+    box-shadow:0 0 0 4px var(--brand-soft);
+  }
+  nav.links{
+    display:flex; gap:32px;
+    font-size:14px;
+    color:var(--text-dim);
+  }
+  nav.links a{ text-decoration:none; transition:color .15s ease; }
+  nav.links a:hover{ color:var(--text); }
+  .nav-cta{
+    font-family:var(--mono);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    background:var(--brand);
+    color:#fff;
+    padding:9px 16px;
+    border-radius:100px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  @media (max-width: 760px){
+    nav.links{ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:96px 0 88px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-260px; right:-220px;
+    width:640px; height:640px;
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255,59,92,0.35), rgba(255,147,48,0.14) 45%, transparent 70%);
+    filter: blur(10px);
+    z-index:0;
+  }
+  .hero-grid{
+    position:relative; z-index:2;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width: 880px){
+    .hero-grid{ grid-template-columns:1fr; }
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--brand);
+    background:var(--brand-soft);
+    border:1px solid rgba(255,59,92,0.3);
+    padding:6px 12px;
+    border-radius:100px;
+    margin-bottom:26px;
+  }
+  .eyebrow::before{ content:"●"; font-size:8px; }
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(38px, 5.4vw, 62px);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  h1 em{
+    font-style:normal;
+    background: linear-gradient(100deg, var(--brand), var(--c-restaurant) 60%, var(--c-teacher));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.lead{
+    font-size:17.5px;
+    color:var(--text-dim);
+    max-width:480px;
+    margin-bottom:34px;
+  }
+  .hero-actions{
+    display:flex; flex-wrap:wrap; gap:14px;
+    margin-bottom:44px;
+  }
+  .btn-primary{
+    font-family:var(--body);
+    font-weight:600;
+    font-size:15px;
+    background:var(--text);
+    color:var(--bg);
+    padding:14px 24px;
+    border-radius:10px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); background:#fff; }
+  .btn-ghost{
+    font-family:var(--body);
+    font-weight:600;
+    font-size:15px;
+    color:var(--text);
+    padding:14px 22px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    text-decoration:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-ghost:hover{ border-color:rgba(245,243,247,0.35); background:rgba(245,243,247,0.03); }
+
+  .hero-stats{
+    display:flex; gap:34px;
+    border-top:1px solid var(--line);
+    padding-top:26px;
+  }
+  .hero-stats div{ display:flex; flex-direction:column; gap:4px; }
+  .hero-stats b{
+    font-family:var(--display);
+    font-size:22px;
+  }
+  .hero-stats span{
+    font-size:12.5px;
+    color:var(--text-faint);
+    font-family:var(--mono);
+  }
+
+  /* portrait card */
+  .portrait{
+    position:relative;
+    justify-self:center;
+  }
+  .portrait-frame{
+    position:relative;
+    width:min(340px, 100%);
+    border-radius:28px;
+    padding:10px;
+    background: linear-gradient(160deg, var(--brand), var(--c-teacher) 55%, var(--c-doctor));
+  }
+  .portrait-frame img{
+    width:100%;
+    border-radius:20px;
+    display:block;
+    filter:grayscale(0.06) contrast(1.03);
+  }
+  .portrait-tag{
+    position:absolute;
+    bottom:-18px; left:-18px;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:12px 16px;
+    display:flex; align-items:center; gap:10px;
+    box-shadow:0 14px 30px rgba(0,0,0,0.35);
+  }
+  .portrait-tag .pulse{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--c-doctor);
+    box-shadow:0 0 0 4px var(--c-doctor-soft);
+    flex:none;
+  }
+  .portrait-tag div{ font-size:12.5px; line-height:1.3; }
+  .portrait-tag b{ font-family:var(--display); font-size:13.5px; display:block; }
+  .portrait-tag span{ color:var(--text-faint); font-family:var(--mono); }
+
+  /* ---------- section shell ---------- */
+  section{ padding:88px 0; }
+  .section-head{
+    max-width:600px;
+    margin-bottom:52px;
+  }
+  .section-head .eyebrow{ margin-bottom:18px; }
+  .section-head h2{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(28px, 3.4vw, 38px);
+    letter-spacing:-0.01em;
+    margin-bottom:14px;
+  }
+  .section-head p{
+    color:var(--text-dim);
+    font-size:16px;
+  }
+
+  /* ---------- services / signature switcher ---------- */
+  .services{ background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+  .industry-tabs{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-bottom:40px;
+  }
+  .industry-tab{
+    font-family:var(--mono);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.01em;
+    color:var(--text-dim);
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    padding:10px 16px 10px 14px;
+    border-radius:100px;
+    cursor:pointer;
+    display:flex; align-items:center; gap:9px;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .industry-tab .swatch{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--tab-color, var(--text-faint));
+    flex:none;
+  }
+  .industry-tab:hover{ color:var(--text); }
+  .industry-tab[aria-selected="true"]{
+    color:var(--text);
+    border-color: var(--tab-color, var(--brand));
+    background: var(--tab-soft, var(--brand-soft));
+  }
+
+  .demo-shell{
+    display:grid;
+    grid-template-columns:0.95fr 1.05fr;
+    gap:44px;
+    align-items:center;
+  }
+  @media (max-width: 880px){
+    .demo-shell{ grid-template-columns:1fr; }
+  }
+
+  .browser{
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:var(--bg-card);
+    box-shadow:0 30px 60px rgba(0,0,0,0.35);
+  }
+  .browser-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 14px;
+    background:rgba(255,255,255,0.03);
+    border-bottom:1px solid var(--line);
+  }
+  .browser-bar span{
+    width:9px; height:9px; border-radius:50%;
+    background:rgba(245,243,247,0.18);
+  }
+  .browser-bar .url{
+    margin-left:8px;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-faint);
+    background:rgba(255,255,255,0.04);
+    padding:5px 10px;
+    border-radius:6px;
+    flex:1;
+  }
+  .browser-body{
+    padding:22px;
+    min-height:290px;
+    transition:background .25s ease;
+  }
+  .demo-title{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:19px;
+    margin-bottom:6px;
+    color: var(--tab-color, var(--text));
+  }
+  .demo-sub{
+    font-size:12.5px;
+    color:var(--text-faint);
+    font-family:var(--mono);
+    margin-bottom:20px;
+  }
+  .demo-blocks{
+    display:grid;
+    gap:10px;
+  }
+  .demo-blocks.grid2{ grid-template-columns:1fr 1fr; }
+  .demo-blocks.grid3{ grid-template-columns:1fr 1fr 1fr; }
+  .demo-row{
+    background:rgba(255,255,255,0.035);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px;
+  }
+  .demo-row .bar{
+    height:8px;
+    border-radius:4px;
+    background: var(--tab-color, var(--brand));
+    opacity:0.85;
+    margin-bottom:8px;
+  }
+  .demo-row .bar.w60{ width:60%; }
+  .demo-row .bar.w40{ width:40%; }
+  .demo-row .bar.w80{ width:80%; }
+  .demo-row .line{
+    height:6px;
+    border-radius:3px;
+    background:rgba(245,243,247,0.12);
+    margin-top:6px;
+  }
+  .demo-row .line.w90{ width:90%; }
+  .demo-row .line.w70{ width:70%; }
+  .demo-row .line.w50{ width:50%; }
+
+  .demo-copy h3{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:24px;
+    margin-bottom:12px;
+    transition:color .25s ease;
+    color: var(--tab-color, var(--text));
+  }
+  .demo-copy p{
+    color:var(--text-dim);
+    font-size:15px;
+    margin-bottom:20px;
+    max-width:440px;
+  }
+  .demo-features{
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .demo-features div{
+    display:flex; align-items:center; gap:10px;
+    font-size:14px;
+    color:var(--text-dim);
+  }
+  .demo-features .check{
+    width:18px; height:18px; border-radius:6px;
+    background: var(--tab-soft, var(--brand-soft));
+    color: var(--tab-color, var(--brand));
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700; flex:none;
+  }
+
+  /* ---------- process ---------- */
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  @media (max-width: 880px){
+    .process-grid{ grid-template-columns:1fr 1fr; }
+  }
+  .process-step{
+    background:var(--bg);
+    padding:28px 24px;
+  }
+  .process-step .num{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--brand);
+    margin-bottom:16px;
+    display:block;
+  }
+  .process-step h4{
+    font-family:var(--display);
+    font-size:17px;
+    margin-bottom:8px;
+  }
+  .process-step p{
+    font-size:13.5px;
+    color:var(--text-dim);
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media (max-width: 880px){
+    .about-grid{ grid-template-columns:1fr; }
+  }
+  .about-card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px;
+  }
+  .about-card .label{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:6px;
+  }
+  .about-card .value{
+    font-family:var(--display);
+    font-size:15.5px;
+    margin-bottom:20px;
+  }
+  .about-card .value:last-child{ margin-bottom:0; }
+  .about-body p{
+    color:var(--text-dim);
+    font-size:16px;
+    margin-bottom:18px;
+    max-width:560px;
+  }
+  .tag-row{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-top:8px;
+  }
+  .tag{
+    font-family:var(--mono);
+    font-size:12px;
+    padding:7px 12px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    color:var(--text-dim);
+  }
+
+  /* ---------- contact ---------- */
+  .contact{
+    background:var(--bg-alt);
+    border-top:1px solid var(--line);
+  }
+  .contact-panel{
+    background: linear-gradient(135deg, rgba(255,59,92,0.16), rgba(255,201,60,0.10));
+    border:1px solid rgba(255,59,92,0.25);
+    border-radius:22px;
+    padding:52px;
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr;
+    gap:40px;
+    align-items:center;
+  }
+  @media (max-width: 880px){
+    .contact-panel{ grid-template-columns:1fr; padding:32px; }
+  }
+  .contact-panel h2{
+    font-family:var(--display);
+    font-size:clamp(26px, 3.4vw, 34px);
+    margin-bottom:14px;
+  }
+  .contact-panel p{ color:var(--text-dim); font-size:15.5px; max-width:420px; }
+  .contact-list{ display:flex; flex-direction:column; gap:16px; }
+  .contact-item{
+    display:flex; align-items:center; gap:14px;
+    text-decoration:none;
+    background:rgba(21,20,28,0.5);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    transition:border-color .15s ease;
+  }
+  .contact-item:hover{ border-color:rgba(245,243,247,0.3); }
+  .contact-item .ic{
+    width:34px; height:34px; border-radius:9px;
+    background:var(--brand-soft);
+    color:var(--brand);
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+    font-family:var(--mono);
+    font-size:13px;
+    font-weight:700;
+  }
+  .contact-item .meta span{
+    display:block; font-family:var(--mono); font-size:11px; color:var(--text-faint);
+  }
+  .contact-item .meta b{ font-family:var(--body); font-size:14.5px; font-weight:600; }
+
+  footer{
+    padding:32px;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <div class="nav">
+    <div class="brandmark"><span class="dot"></span>Santosh&nbsp;Gharti&nbsp;Magar</div>
+    <nav class="links">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Start a project →</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Available for new projects</div>
+        <h1>Websites built for <em>doctors, restaurants &amp; schools</em> — not templates.</h1>
+        <p class="lead">I'm Santosh, a freelance web developer. I design and build sites for clinics, restaurants, hospitals, schools and teachers — each one shaped around how that business actually works.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#contact">Get a free quote →</a>
+          <a class="btn-ghost" href="#services">See what I build</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>5</b><span>INDUSTRIES SERVED</span></div>
+          <div><b>100%</b><span>CUSTOM BUILT</span></div>
+          <div><b>1–2 WK</b><span>TYPICAL TURNAROUND</span></div>
+        </div>
+      </div>
+      <div class="portrait">
+        <div class="portrait-frame">
+          <img id="profilePhoto" alt="Portrait of Santosh Gharti Magar" src="data:image/jpeg;base64,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">
+        </div>
+        <div class="portrait-tag">
+          <span class="pulse"></span>
+          <div><b>Santosh Gharti Magar</b><span>Freelance Web Developer</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Services</div>
+        <h2>One developer, five very different worlds</h2>
+        <p>A clinic's site needs to build trust. A restaurant's needs to make you hungry. Pick an industry below to see how the approach changes.</p>
+      </div>
+
+      <div class="industry-tabs" role="tablist" aria-label="Industries">
+        <button class="industry-tab" style="--tab-color:#21d4b4; --tab-soft: rgba(33,212,180,0.14);" data-industry="doctor" role="tab" aria-selected="true"><span class="swatch"></span>Doctors &amp; Clinics</button>
+        <button class="industry-tab" style="--tab-color:#ff9330; --tab-soft: rgba(255,147,48,0.14);" data-industry="restaurant" role="tab" aria-selected="false"><span class="swatch"></span>Restaurants</button>
+        <button class="industry-tab" style="--tab-color:#ff3b5c; --tab-soft: rgba(255,59,92,0.14);" data-industry="hospital" role="tab" aria-selected="false"><span class="swatch"></span>Hospitals</button>
+        <button class="industry-tab" style="--tab-color:#4c6ef5; --tab-soft: rgba(76,110,245,0.14);" data-industry="school" role="tab" aria-selected="false"><span class="swatch"></span>Schools</button>
+        <button class="industry-tab" style="--tab-color:#ffc93c; --tab-soft: rgba(255,201,60,0.14);" data-industry="teacher" role="tab" aria-selected="false"><span class="swatch"></span>Teachers</button>
+      </div>
+
+      <div class="demo-shell" id="demoShell" style="--tab-color:#21d4b4; --tab-soft: rgba(33,212,180,0.14);">
+        <div class="browser">
+          <div class="browser-bar">
+            <span></span><span></span><span></span>
+            <div class="url" id="demoUrl">drsharma-clinic.com</div>
+          </div>
+          <div class="browser-body">
+            <div class="demo-title" id="demoTitle">Dr. Sharma Family Clinic</div>
+            <div class="demo-sub" id="demoSub">BOOK APPOINTMENT · CONTACT · SERVICES</div>
+            <div class="demo-blocks" id="demoBlocks"></div>
+          </div>
+        </div>
+        <div class="demo-copy">
+          <h3 id="copyTitle">Built to get patients booked in</h3>
+          <p id="copyBody">Clear service listing, doctor availability, and a booking form that sends straight to the front desk — so fewer calls, more booked slots.</p>
+          <div class="demo-features" id="copyFeatures"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">How it works</div>
+        <h2>From first call to live site</h2>
+        <p>The same straightforward process, whatever you run.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step">
+          <span class="num">01</span>
+          <h4>Understand the business</h4>
+          <p>A short call about what you do, who your customers are, and what the site needs to actually accomplish.</p>
+        </div>
+        <div class="process-step">
+          <span class="num">02</span>
+          <h4>Design the layout</h4>
+          <p>A layout built around your content — menu, services, classes, whatever the core offering is — not a generic template.</p>
+        </div>
+        <div class="process-step">
+          <span class="num">03</span>
+          <h4>Build &amp; review</h4>
+          <p>I build it, send you a working link, and adjust based on your feedback until it's right.</p>
+        </div>
+        <div class="process-step">
+          <span class="num">04</span>
+          <h4>Launch &amp; hand-off</h4>
+          <p>The finished site goes live, and I walk you through updating it yourself if you'd like to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-card">
+        <div class="label">Based</div>
+        <div class="value">Nepal</div>
+        <div class="label">Focus</div>
+        <div class="value">Small business &amp; institution websites</div>
+        <div class="label">Works with</div>
+        <div class="value">Clinics · Restaurants · Hospitals · Schools · Teachers</div>
+      </div>
+      <div class="about-body">
+        <div class="eyebrow">About</div>
+        <p>I'm a freelance web developer building websites for the people who run the everyday places around us — doctors' offices, restaurants, hospitals, schools, and individual teachers. I care about sites that are fast, easy for the owner to update, and built around what that business actually needs, not a one-size-fits-all template.</p>
+        <p>If your business doesn't fit neatly into "clinic" or "restaurant," that's fine too — tell me what you do and I'll build around it.</p>
+        <div class="tag-row">
+          <span class="tag">HTML / CSS / JS</span>
+          <span class="tag">Responsive design</span>
+          <span class="tag">Booking &amp; contact forms</span>
+          <span class="tag">Menu &amp; catalog layouts</span>
+          <span class="tag">Fast turnaround</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-panel">
+        <div>
+          <h2>Have a business that needs a site?</h2>
+          <p>Send a message with what you run and what you need — I'll get back to you with a quote and timeline.</p>
+        </div>
+        <div class="contact-list">
+          <a class="contact-item" href="mailto:santoshghartimagar918@gmail.com">
+            <div class="ic">@</div>
+            <div class="meta"><span>EMAIL</span><b>santoshghartimagar918@gmail.com</b></div>
+          </a>
+          <a class="contact-item" href="tel:+9779779747981">
+            <div class="ic">☎</div>
+            <div class="meta"><span>PHONE</span><b>+977 8799747981</b></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> Santosh Gharti Magar — Freelance Web Developer
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const data = {
+  doctor: {
+    color: '#21d4b4', soft: 'rgba(33,212,180,0.14)',
+    url: 'drsharma-clinic.com',
+    title: 'Dr. Sharma Family Clinic',
+    sub: 'BOOK APPOINTMENT · CONTACT · SERVICES',
+    blocks: 'grid2:80,90;60,70;40,50;80,90',
+    copyTitle: 'Built to get patients booked in',
+    copyBody: "Clear service listing, doctor availability, and a booking form that sends straight to the front desk — so fewer calls, more booked slots.",
+    features: ['Online appointment requests', 'Doctor bios &amp; specialties', 'Clinic hours &amp; location map']
+  },
+  restaurant: {
+    color: '#ff9330', soft: 'rgba(255,147,48,0.14)',
+    url: 'thespicehouse.com',
+    title: 'The Spice House',
+    sub: 'MENU · RESERVATIONS · LOCATION',
+    blocks: 'grid3:70,80;60,60;80,70;50,60;70,80;60,50',
+    copyTitle: 'Built to make people hungry',
+    copyBody: "A menu that's easy to browse on a phone, real photos of the food, and a reservation button that's never more than one tap away.",
+    features: ['Full digital menu with prices', 'Table reservation form', 'Hours, map &amp; delivery links']
+  },
+  hospital: {
+    color: '#ff3b5c', soft: 'rgba(255,59,92,0.14)',
+    url: 'valley-hospital.org',
+    title: 'Valley General Hospital',
+    sub: 'DEPARTMENTS · EMERGENCY · CAREERS',
+    blocks: 'grid2:90,80;70,60;60,80;90,70',
+    copyTitle: 'Built for trust, at scale',
+    copyBody: "A structured site for larger institutions — departments, doctor directories, and emergency information that's easy to find under pressure.",
+    features: ['Department &amp; doctor directory', 'Emergency contact front and center', 'Careers &amp; visitor information']
+  },
+  school: {
+    color: '#4c6ef5', soft: 'rgba(76,110,245,0.14)',
+    url: 'greenfield-school.edu',
+    title: 'Greenfield School',
+    sub: 'ADMISSIONS · ACADEMICS · NOTICES',
+    blocks: 'grid2:70,90;80,60;60,70;90,80',
+    copyTitle: 'Built to inform parents fast',
+    copyBody: "Admissions info, academic calendar, and notices in one clear place — so parents stop calling the front office for basic answers.",
+    features: ['Admissions &amp; enrollment forms', 'Notice board for announcements', 'Academic calendar &amp; class info']
+  },
+  teacher: {
+    color: '#ffc93c', soft: 'rgba(255,201,60,0.14)',
+    url: 'learnwithmeera.com',
+    title: 'Learn with Meera',
+    sub: 'CLASSES · SCHEDULE · BOOKING',
+    blocks: 'grid2:80,60;60,80;70,50;80,90',
+    copyTitle: 'Built for a personal teaching brand',
+    copyBody: "A simple, personal site for an individual tutor or teacher — class offerings, schedule, and a way for students to reach out directly.",
+    features: ['Class &amp; subject listings', 'Weekly schedule display', 'Direct contact / booking form']
+  }
+};
+
+const shell = document.getElementById('demoShell');
+const urlEl = document.getElementById('demoUrl');
+const titleEl = document.getElementById('demoTitle');
+const subEl = document.getElementById('demoSub');
+const blocksEl = document.getElementById('demoBlocks');
+const copyTitleEl = document.getElementById('copyTitle');
+const copyBodyEl = document.getElementById('copyBody');
+const copyFeaturesEl = document.getElementById('copyFeatures');
+const tabs = document.querySelectorAll('.industry-tab');
+
+function renderBlocks(spec){
+  const [layout, pairs] = spec.split(':');
+  const cls = layout === 'grid3' ? 'grid3' : 'grid2';
+  const items = pairs.split(';').map(p => p.split(',').map(Number));
+  blocksEl.className = 'demo-blocks ' + cls;
+  blocksEl.innerHTML = items.map(([a,b]) => `
+    <div class="demo-row">
+      <div class="bar w${a >= 75 ? 80 : a >= 55 ? 60 : 40}"></div>
+      <div class="line w90"></div>
+      <div class="line w${b >= 75 ? 70 : 50}"></div>
+    </div>
+  `).join('');
+}
+
+function setIndustry(key){
+  const d = data[key];
+  shell.style.setProperty('--tab-color', d.color);
+  shell.style.setProperty('--tab-soft', d.soft);
+  urlEl.textContent = d.url;
+  titleEl.textContent = d.title;
+  subEl.textContent = d.sub;
+  renderBlocks(d.blocks);
+  copyTitleEl.textContent = d.copyTitle;
+  copyBodyEl.textContent = d.copyBody;
+  copyFeaturesEl.innerHTML = d.features.map(f => `<div><span class="check">✓</span>${f}</div>`).join('');
+
+  tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.industry === key ? 'true' : 'false'));
+}
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => setIndustry(tab.dataset.industry));
+});
+
+setIndustry('doctor');
+</script>
+
+</body>
+</html>
